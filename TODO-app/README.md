@@ -71,7 +71,7 @@ python main.py
 
 ## Example of the Application Dashboard
 
-We show two different modes, day and night.
+I show two different modes of the app, day and night.
 
 ### Light mode
 
