@@ -45,6 +45,9 @@ $(document).ready(function () {
         const button = $(event.relatedTarget) // Button that triggered the modal
         const taskID = button.data('source') // Extract info from data-* attributes
         const content = button.data('content') // Extract info from data-* attributes
+        const date = button.data('date') // Extract info from data-* attributes
+        const hour = button.data('hour') // Extract info from data-* attributes
+        
 
         const modal = $(this)
         if (taskID === 'New Task') {
@@ -56,7 +59,10 @@ $(document).ready(function () {
         }
 
         if (content) {
-            modal.find('.form-control').val(content);
+            modal.find('#task-form').val(content);
+            modal.find('#date-form').val(date);
+            modal.find('#hour-form').val(hour);
+
         } else {
             modal.find('.form-control').val('');
         }
@@ -65,13 +71,17 @@ $(document).ready(function () {
 
     $('#submit-task').click(function () {
         const tID = $('#task-form-display').attr('taskID');
-        console.log($('#task-modal').find('.form-control').val())
+        console.log($('#task-modal').find('#task-form').val())
+        console.log($('#task-modal').find('#date-form').val())
+        console.log($('#task-modal').find('#hour-form').val())
         $.ajax({
             type: 'POST',
             url: tID ? '/edit/' + tID : '/create',
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify({
-                'description': $('#task-modal').find('.form-control').val()
+                'description': $('#task-modal').find('#task-form').val(),
+                'date': $('#task-modal').find('#date-form').val(),
+                'hour': $('#task-modal').find('#hour-form').val()
             }),
             success: function (res) {
                 console.log(res.response)

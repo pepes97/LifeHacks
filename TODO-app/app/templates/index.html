@@ -57,7 +57,17 @@
                     <div class="modal-body">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="task-form-display">Task</span>
-                            <input type="text" class="form-control" placeholder="Description of task"
+                            <input type="text" class="form-control" id="task-form" placeholder="Description of task"
+                                aria-label="task-name" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="date-form-display">Expiration Date</span>
+                            <input type="text" class="form-control" id="date-form" placeholder="date of task"
+                                aria-label="task-name" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="date-form-display">Expiration Hour</span>
+                            <input type="text" class="form-control" id="hour-form" placeholder="hour of task"
                                 aria-label="task-name" aria-describedby="basic-addon1">
                         </div>
                     </div>
@@ -77,6 +87,8 @@
             <thead>
                 <tr>
                     <th class="task-id">#</th>
+                    <th class="date">Expiration Date</th>
+                    <th class="hour">Expiration Hour</th>
                     <th class="task">Task Name</th>
                     <th class="status">Status</th>
                     <th class="update">Edit</th>
@@ -88,6 +100,8 @@
                 {% for item in items %}
                 <tr>
                     <td>{{item.id}}</td>
+                    <td>{{item.date}}</td>
+                    <td>{{item.hour}}</td>
                     <td>{{item.task}}</td>
 
                     {% if item.status == "In Progress" %}
@@ -104,8 +118,9 @@
                     {%endif%}
 
                     <td><button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#task-modal" data-source="{{item.id}}" data-content="{{item.task}}"><i
-                                class="fa fa-pen fa-1" aria-hidden="true"></i></button></td>
+                            data-bs-target="#task-modal" data-source="{{item.id}}" data-content="{{item.task}}" 
+                            data-date="{{item.date}}" data-hour="{{item.hour}}"><i
+                            class="fa fa-pen fa-1" aria-hidden="true"></i></button></td>
 
                     <td><button class="btn btn-outline-secondary btn-sm remove" data-source="{{item.id}}"
                             type="button"><i class="fa fa-trash fa-1" aria-hidden="true"></i></button></td>

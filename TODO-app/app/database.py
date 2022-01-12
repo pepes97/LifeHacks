@@ -13,6 +13,8 @@ def fetch_todo() -> dict:
     for result in query_results:
         item = {
             "id": result.id,
+            "date": result.date,
+            "hour": result.hour,
             "task": result.task,
             "status": result.status
         }
@@ -21,11 +23,13 @@ def fetch_todo() -> dict:
     return todo_list
 
 
-def update_task_entry(task_id: int, text: str) -> None:
+def update_task_entry(task_id: int, text, date, hour) -> None:
     """Updates task description based on given `task_id`
     Args:
         task_id (int): Targeted task_id
-        text (str): Updated description
+        text: Updated description
+        date: Updated date
+        hour: Updated hour
     Returns:
         None
     """
@@ -35,6 +39,10 @@ def update_task_entry(task_id: int, text: str) -> None:
     task = Task.query.get(task_id)
     if text!= task.task:
         task.task = text
+    if date!= task.date:
+        task.date = date
+    if hour!= task.hour:
+        task.hour = hour
     db.session.commit()
 
 
@@ -55,7 +63,7 @@ def update_status_entry(task_id: int, text: str) -> None:
         task.status = text
     db.session.commit()
 
-def insert_new_task(text: str) ->  int:
+def insert_new_task(text, date, hours) ->  int:
     """Insert new task to todo table.
     Args:
         text (str): Task description
@@ -63,7 +71,7 @@ def insert_new_task(text: str) ->  int:
     """
     query = 'Insert Into tasks (task, status) VALUES ("{}", "{}");'.format(text, "Todo")
     print(query)
-    task = Task(text)
+    task = Task(text, date, hours)
     db.session.add(task)
     db.session.commit()
     descending = Task.query.order_by(Task.id.desc())

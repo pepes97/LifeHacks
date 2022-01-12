@@ -1,6 +1,3 @@
-
-
-
 """Setup at app startup"""
 from flask import render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -13,11 +10,15 @@ db = SQLAlchemy(app)
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Text)
+    hour = db.Column(db.Text)
     task = db.Column(db.Text)
     status = db.Column(db.Text, default='Todo')
 
-    def __init__(self, task):
+    def __init__(self, task, date, hour):
         self.task = task
+        self.date = date
+        self.hour = hour
         self.status = 'Todo'
 
     def __repr__(self):
